@@ -1,7 +1,7 @@
 
 "use client"
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 
 export const HighlightedText = ({
@@ -17,18 +17,23 @@ export const HighlightedText = ({
 	}) => {
 	
 	const [clicked, setClicked] = useState("all");
-	const [isActive, setIsActive] = useState(false)
+	
+	const handleClick = () => {
+
+		if (clicked !== text) {
+			
+			setClicked(text)
+		}
+	}
+
 	console.log(clicked)
 	return (
 		<h4
-			onClick={() => {
-				setClicked(text)
-				setIsActive(true)
-			}}
+			onClick={handleClick}
 			className={`${textClass} relative w-fit my-9 z-10 capitalize`}>
 			{text}
 			<span style={{
-				height: clicked === text? "2px" : "0px"
+				height: clicked === text? "6px" : "0"
 			}}
 				className={`${lineClass} bg-yellow-200 w-full  absolute left-0 -z-2 bottom-0.5`}
 			/>
