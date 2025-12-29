@@ -1,11 +1,14 @@
+
 import { HighlightedText } from "@/components/highlighted-text";
 
+
 export default function Home() {
+
 	return (
 		<main className="w-full ">
 			<div className="flex justify-start px-10 items-center py-6 max-w-5xl mx-auto gap-6 overflow-hidden w-full flex-col">
 				<div className="flex flex-row gap-2 items-center w-full">
-					<h4>FEAT. </h4>
+					<h4 className="text-2xl">FEAT. </h4>
 					<div className="w-full h-px bg-zinc-300" />
 				</div>
 				{new Array(3).fill(0).map((_,i) => (
@@ -19,9 +22,11 @@ export default function Home() {
 						<HighlightedText
 							text="WHO TF IS IN MY HEAD??"
 							textClass="text-xl py-4"
+							
 						/>
 					</div>
 				))}
+				
 			</div>
 		</main>
 	);

@@ -1,12 +1,16 @@
 
-
+"use client"
 import { Search } from 'lucide-react';
 
 import { HighlightedText } from './highlighted-text';
+import { useState } from 'react';
 
 export const Header = () => {
+	const [selectedTopic, setSelectedTopic] = useState("all")
 
-
+	const handleSelect = (topic: string) => {
+	setSelectedTopic(topic)
+}
   return (
 		<div className="w-screen h-full">
 			<div className="w-full border-b border-zinc-200">
@@ -27,8 +31,8 @@ export const Header = () => {
 
 			<div className="w-full border-b border-zinc-200">
 				<div className="flex justify-start px-10 items-center py-6 max-w-5xl mx-auto gap-6 overflow-hidden">
-					{nav.map((item, i) => (
-						<HighlightedText key={i} text={item}  />
+					{topic.map((item, i) => (
+						<HighlightedText key={i} text={item} isSelected={selectedTopic} onSelect={handleSelect} />
 					))}
 				</div>
 			</div>
@@ -36,4 +40,4 @@ export const Header = () => {
 	);
 }
 
-const nav = ["all", "politics", "economy", "science", "lifestyle", "travel"]
+const topic = ["all", "politics", "economy", "science", "lifestyle", "travel"]
