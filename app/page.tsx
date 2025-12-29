@@ -1,4 +1,5 @@
-import { HighlightedText } from "@/components/highlight-text";
+
+import { UnderlineHeading } from "@/components/underline-heading";
 import {  Heart, MessageCircle, Share2 } from "lucide-react";
 
 
@@ -21,10 +22,9 @@ export default function Home() {
 						<p className="uppercase font-extrabold"> technology</p>
 					</button>
 
-					<HighlightedText
-						text="TRUMP TO LUNCH PRECISION AIRSTRIKES"
-						textClass="text-xl pt-4"
-					/>
+					<UnderlineHeading
+						size="text-lg"
+						text="Trump launches precision strikes is Nigeria, Sokoto as promised."/>
 					<p className="text-sm font-light">
 						Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 						suscipit iusto vero dolores, eum perspiciatis.
@@ -58,12 +58,8 @@ export default function Home() {
 						className="w-full relative flex gap-4  border-y border-zinc-300">
 						<div className="h-20 min-w-20 bg-zinc-700" />
 						<div className="flex flex-col">
-							<HighlightedText
-								text="WHO TF IS IN MY HEAD??"
-								textClass="text-xl"
-								lineClass="bottom-0.5"
-							/>
-							<p className="text-xs">
+							<UnderlineHeading text="More attacks in the middle east as tensions grow"/>
+							<p className="text-xs ">
 								Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
 								vero ullam asperiores.
 							</p>
