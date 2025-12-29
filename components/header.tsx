@@ -4,6 +4,8 @@ import { Search } from 'lucide-react';
 
 import { HighlightedText } from './highlighted-text';
 import { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 
 export const Header = () => {
 	const [selectedTopic, setSelectedTopic] = useState("all")
@@ -30,7 +32,7 @@ export const Header = () => {
 			</div>
 
 			<div className="w-full border-b border-zinc-200">
-				<div className="flex justify-start px-10 items-center py-6 max-w-5xl mx-auto gap-6 overflow-hidden">
+				<div className="flex justify-start px-10 items-center py-6 max-w-5xl mx-auto gap-6 overflow-x-auto whitespace-nowrap">
 					{topic.map((item, i) => (
 						<HighlightedText key={i} text={item} isSelected={selectedTopic} onSelect={handleSelect} />
 					))}
