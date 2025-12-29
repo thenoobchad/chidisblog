@@ -3,7 +3,7 @@
 import {  useState } from "react";
 
 
-export const HighlightedText = ({
+export const TopicNavigation = ({
 	text,
 	textClass,
 	lineClass,
@@ -16,11 +16,12 @@ export const HighlightedText = ({
 	isSelected?: string;
 	onSelect?: (text: string) => void;
 }) => {
-	
 	return (
 		<h4
 			onClick={onSelect ? () => onSelect(text) : undefined}
-			className={`${textClass} relative w-fit my-9 z-10 uppercase text-sm`}>
+			className={`${textClass} relative w-fit my-9 z-10 uppercase text-sm font-bold text-zinc-500 ${
+				isSelected === text ? "text-zinc-900" : ""
+			}`}>
 			{text}
 			<span
 				style={{

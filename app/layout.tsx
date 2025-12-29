@@ -4,22 +4,31 @@ import localFont from "next/font/local"
 import "./globals.css";
 import { Header } from "@/components/header";
 
-
-
 const poppins = localFont({
-	src: "../public/fonts/Poppins-ExtraBold.ttf",
-  variable: "--font-poppins",
-  display:"swap"
+	src: [
+		{
+			path: "../public/fonts/Poppins-ExtraBold.ttf",
+			weight: "700",
+			style: "normal",
+		},
+		{
+			path: "../public/fonts/Poppins-Regular.ttf",
+			weight: "300",
+			style: "normal",
+		},
+		{
+			path: "../public/fonts/Poppins-Medium.ttf",
+			weight: "500",
+			style: "normal",
+		},
+	],
+	variable: "--font-poppins",
+	display: "swap",
 });
 
-const dmsans = localFont({
-	src: "../public/fonts/DMSans-Regular.ttf",
-  display: "swap",
-  variable: "--font-dmsans"
-});
 
 export const metadata: Metadata = {
-  title: "hidi's blog",
+  title: "Chidi's blog",
   description: "Stay updated with recent trends in the world",
 };
 
@@ -30,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
 		<html lang="en">
-			<body className={`${poppins.variable} ${dmsans.className}`}>
+			<body className={` ${poppins.className}`}>
 				<Header />
 				{children}
 			</body>
