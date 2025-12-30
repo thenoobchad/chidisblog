@@ -3,10 +3,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 
-
-import { BlogProvider } from "@/context/blogcontext";
-
-
 const poppins = localFont({
 	src: [
 		{
@@ -41,15 +37,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={` ${poppins.className}`}>
-			
-					<BlogProvider>
-
-						{children}
-						
-					</BlogProvider>
-				
-			</body>
+			<body className={` ${poppins.className}`}>{children}</body>
 		</html>
 	);
 }
