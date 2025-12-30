@@ -4,15 +4,23 @@ import {useState } from "react";
 import { TopicNavigation } from "./topic-nav";
 import { Search } from "lucide-react";
 
+import { useSearchParams,  } from "next/navigation";
+import Link from "next/link";
 
-const topic = ["all", "politics", "economy", "science", "lifestyle", "travel"];
+
+const tags = ["politics", "economy", "science", "lifestyle", "travel"];
 
 export const NavigationHeader = () => {
+	
+	const searchParams = useSearchParams()
+	const currentTag = searchParams.get('tag')
     
 	const [selectedTopic, setSelectedTopic] = useState("all");
-
-	const handleSelect = (topic: string) => {
-		setSelectedTopic(topic);
+	
+	const handleSelect = (tag: string) => {
+		const params = new URLSearchParams(searchParams.toString());
+				
+		setSelectedTopic(tag);
 	};
 
 	
@@ -27,13 +35,21 @@ export const NavigationHeader = () => {
 
 			<div className="w-full border-b border-zinc-300">
 				<div className="flex justify-start px-10 items-center py-6 max-w-5xl mx-auto gap-6 overflow-x-auto whitespace-nowrap">
-					{topic.map((item, i) => (
+					<Link  href={`/`}>
 						<TopicNavigation
-							key={i}
-							text={item}
+							text="all"
 							isSelected={selectedTopic}
 							onSelect={handleSelect}
 						/>
+					</Link>
+					{tags.map((cat, i) => (
+						<Link key={i} href={`/?tag=${cat.toLowerCase()}`}>
+							<TopicNavigation
+								text={cat}
+								isSelected={selectedTopic}
+								onSelect={handleSelect}
+							/>
+						</Link>
 					))}
 				</div>
 			</div>

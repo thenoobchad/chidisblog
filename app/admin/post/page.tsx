@@ -4,8 +4,10 @@
 import { Image } from "lucide-react";
 import { FormEvent, useState } from "react";
 
-export default function PostPage() {
+import {toast} from 'alert'
 
+export default function PostPage() {
+const [isLoading, setIsLoading] = useState(false)
 	const [title, setTitle] = useState("")
 	const [slug, setSlug] = useState(title);
 	
@@ -15,16 +17,24 @@ export default function PostPage() {
 
   const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+setIsLoading(true)
 	  const newPost = {
 		  id: crypto.randomUUID(),
 		  title,
 		  slug,
 		  content,
    }
-	  
+	  try {
+		  console.log(newPost)
+		// Handle backend submit here
+	  } catch (error) {
+		  console.error(error)
+		  toast("Error creating post")
+	  } finally {
+		  setIsLoading(false)
+		  toast('Post created successfully!')
+	  }
 
-    console.log(newPost)
   }
 	
 	const createSlug = (text: string):string => {
@@ -49,15 +59,14 @@ export default function PostPage() {
 					<label htmlFor="title">Title</label>
 					<input
 						type="text"
-					  value={title}
-					  required
-					  onChange={(e) => {
-						  setTitle(e.target.value)
+						value={title}
+						required
+						onChange={(e) => {
+							setTitle(e.target.value);
 
-						  if (!isEdited) {
-							  setSlug(createSlug(e.target.value));
-						  }
-							
+							if (!isEdited) {
+								setSlug(createSlug(e.target.value));
+							}
 						}}
 						placeholder="Enter Heading.."
 						className="bg-zinc-300 px-2 py-3 outline-none"
@@ -68,12 +77,11 @@ export default function PostPage() {
 					<label htmlFor="title">Slug</label>
 					<input
 						type="text"
-					  value={slug}
-					  required
-					  onChange={(e) => {
-						  setIsEdited(false)
-							setSlug
-							(createSlug(e.target.value))
+						value={slug}
+						required
+						onChange={(e) => {
+							setIsEdited(false);
+							setSlug(createSlug(e.target.value));
 						}}
 						placeholder="Slug.."
 						className="bg-zinc-300 px-2 py-3 outline-none"
@@ -83,8 +91,8 @@ export default function PostPage() {
 				<div className="flex flex-col gap-2">
 					<label htmlFor="title">Content</label>
 					<textarea
-					  value={content}
-					  required
+						value={content}
+						required
 						onChange={(e) => setContent(e.target.value)}
 						rows={5}
 						placeholder="Type Post..."
@@ -93,9 +101,10 @@ export default function PostPage() {
 				</div>
 
 				<button className="bg-white text-zinc-900 px-6 py-2 mt-4 border-3 border-zinc-900 text-xs shadow-[6px_6px_0px_#000] w-fit active:scale-98 active:shadow-[0px_0px_0px_#000] tracking-wide">
-					<h4>Send Post</h4>
+					<h4>{isLoading ? "Creating Post" : "Send Post"}</h4>
 				</button>
-			</form>
+		  </form>
+		 
 		</div>
 	);
 }

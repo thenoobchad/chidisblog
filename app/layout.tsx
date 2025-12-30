@@ -6,6 +6,7 @@ import "./globals.css";
 import Providers from "../lib/providers";
 import { Header } from "@/components/header";
 import { BlogProvider } from "@/context/blogcontext";
+import {Toaster} from 'alert'
 
 const poppins = localFont({
 	src: [
@@ -45,7 +46,8 @@ export default function RootLayout({
 				<Providers>
 					<BlogProvider>
 
-					{children}
+						{children}
+						<Toaster/>
 					</BlogProvider>
 				</Providers>
 			</body>

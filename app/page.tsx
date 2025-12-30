@@ -1,41 +1,31 @@
-"use client";
-
 import { Header } from "@/components/header";
 import { NavigationHeader } from "@/components/navigation/navigation-header";
 import Sidebar from "@/components/sidebar";
 
 import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
-import { useQuery } from "@tanstack/react-query";
+
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Link from "next/link";
 
 type PostType = {
 	id: string;
+	tag: string;
 	title: string;
+	slug: string;
 	content: string;
 };
 
-type BlogContextType = {
-	posts: PostType[];
-	fetchPosts: () => Promise<void>;
-};
 
-export default function Home() {
-	async function fetchPosts() {
-		return await new Promise<PostType[]>((resolve) => {
-			return resolve(Posts);
+export default async function Home({ searchParams }: { searchParams: Promise<{ tag?: string }> }) {
+	const {tag} = await searchParams
+	
+		const posts = await new Promise<PostType[]>((resolve) => {
+			return setTimeout(() => resolve(Posts), 2000)
 		});
-	}
-	
+		
+	const data = tag ? posts.filter(post => post.tag.toLowerCase() === tag) : posts
 
-	const { data, isLoading, isError, error } = useQuery({
-		queryKey: ["posts"],
-		queryFn: fetchPosts,
-	});
-
-	console.log("This is data", data);
-	
 	return (
 		<>
 			<Header />
@@ -53,23 +43,17 @@ export default function Home() {
 						<div className="w-full h-px bg-zinc-300" />
 					</div>
 
-					{isLoading ? (
-						<p>Loading...</p>
-					) : isError ? (
-						<p>{error.message}</p>
-					) : (
-						data?.map((post) => (
-							<Link key={post.id} href={`/blog/${post.id}`}>
-								<div className="w-full relative flex gap-4  border-y border-zinc-300">
-									<div className="h-20 min-w-30 bg-zinc-700" />
-									<div className="flex flex-col">
-										<h1 className="font-bold"> {`${post.title}`}</h1>
-										<p className="text-xs">{post.content.slice(0, 100)}...</p>
-									</div>
+					{data?.map((post) => (
+						<Link key={post.id} href={`/blog/${post.slug}`}>
+							<div className="w-full relative flex gap-4  border-y border-zinc-300">
+								<div className="h-20 min-w-30 bg-zinc-700" />
+								<div className="flex flex-col">
+									<h1 className="font-bold"> {`${post.title}`}</h1>
+									<p className="text-xs">{post.content.slice(0, 100)}...</p>
 								</div>
-							</Link>
-						))
-					)}
+							</div>
+						</Link>
+					))}
 
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap"></h4>
@@ -91,7 +75,7 @@ const FeaturedPost = () => {
 
 	return (
 		<div className="w-full relative">
-			<Link href={`/blog/444547576`}>
+			<Link href={`/blog/${post.slug}`}>
 				<div className="h-58 w-full bg-zinc-700" />
 
 				<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">

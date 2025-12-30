@@ -30,7 +30,7 @@
 		".next/dev/types/**/*.ts",
 		"**/*.mts",
 		"lib/providers.tsx",
-		"app/(blog)/blog/[slug]/.hg"
+		"app/blog/[slug]/.hg"
 	],
 	"exclude": ["node_modules"]
 }
