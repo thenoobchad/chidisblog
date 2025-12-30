@@ -21,7 +21,7 @@ export default async function PostPage({params}:{params: Promise<{slug: string}>
 					<div className="h-58 w-full bg-zinc-700" />
 
 					<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
-						<p className="uppercase font-extrabold">{post.tag}</p>
+						<p className="uppercase font-extrabold">{post?.tag}</p>
 					</button>
 					
 
