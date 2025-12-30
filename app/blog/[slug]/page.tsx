@@ -10,7 +10,7 @@ import { FormEvent} from "react";
 export default async function PostPage({params}:{params: Promise<{slug: string}>}) {
 	
 	const { slug } = await params
-	const [post] = Posts.filter((item) => (item.slug === slug))
+	const post =  await Posts.filter((item) => (item.slug === slug))[0]
 
 	console.log("the param",slug)
 
