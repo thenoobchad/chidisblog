@@ -3,14 +3,13 @@
 import CommentForm from "@/components/comment-form";
 import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
-import { Heart, MessageCircle, Share2 } from "lucide-react";
-import { FormEvent} from "react";
+
 
 
 export default async function PostPage({params}:{params: Promise<{slug: string}>}) {
 	
 	const { slug } = await params
-	const post =  await Posts.filter((item) => (item.slug === slug))[0]
+	const post =  Posts.filter((item) => (item.slug === slug))[0]
 
 	console.log("the param",slug)
 
