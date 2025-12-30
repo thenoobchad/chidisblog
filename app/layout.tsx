@@ -5,6 +5,7 @@ import "./globals.css";
 
 import Providers from "../lib/providers";
 import { Header } from "@/components/header";
+import { BlogProvider } from "@/context/blogcontext";
 
 const poppins = localFont({
 	src: [
@@ -42,8 +43,10 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={` ${poppins.className}`}>
 				<Providers>
-					<Header />
+					<BlogProvider>
+
 					{children}
+					</BlogProvider>
 				</Providers>
 			</body>
 		</html>
