@@ -1,5 +1,6 @@
 import { Header } from "@/components/header";
 import { NavigationHeader } from "@/components/navigation/navigation-header";
+import PostList from "@/components/post-list";
 import Sidebar from "@/components/sidebar";
 
 import { UnderlineHeading } from "@/components/underline-heading";
@@ -44,17 +45,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
 						<div className="w-full h-px bg-zinc-300" />
 					</div>
 
-					{data?.map((post) => (
-						<Link key={post.id} href={`/blog/${(post.slug).toLowerCase().normalize().trim()}`}>
-							<div className="w-full relative flex gap-4  border-y border-zinc-300">
-								<div className="h-20 min-w-30 bg-zinc-700" />
-								<div className="flex flex-col">
-									<h1 className="font-bold"> {`${post.title}`}</h1>
-									<p className="text-xs">{post.content.slice(0, 100)}...</p>
-								</div>
-							</div>
-						</Link>
-					))}
+					<PostList posts={data} />
+
+					
 
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap"></h4>
