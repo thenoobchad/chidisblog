@@ -7,16 +7,18 @@ export const UnderlineHeading = ({
 	height = "30%",
 	bottom = "10%",
 	
+	
 }: {
 		text: string;
 		size?: string;
 	color?: string;
 	height?: string;
-	bottom?: string;
+		bottom?: string;
+	
 	
 }) => {
 	return (
-		<h2 className={`${size} uppercase font-bold`}>
+		<h2 className={`${size}  uppercase font-bold`}>
 			<span
 				style={{
 					backgroundImage: `linear-gradient(120deg, ${color} 0%, ${color} 100%)`,
@@ -24,7 +26,7 @@ export const UnderlineHeading = ({
 					backgroundSize: `100% ${height}`,
 					backgroundPosition: `0 ${100 - parseInt(bottom)}%`,
 				}}
-				className="inline box-decoration-break-clone box-decoration-clone">
+				className={`inline box-decoration-break-clone box-decoration-clone `}>
 				{text}
 			</span>
 		</h2>
