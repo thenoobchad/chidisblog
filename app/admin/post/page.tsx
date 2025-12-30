@@ -1,10 +1,8 @@
 "use client"
 
 
-import { Image } from "lucide-react";
 import { FormEvent, useState } from "react";
 
-import {toast} from 'alert'
 
 export default function PostPage() {
 const [isLoading, setIsLoading] = useState(false)
@@ -29,10 +27,9 @@ setIsLoading(true)
 		// Handle backend submit here
 	  } catch (error) {
 		  console.error(error)
-		  toast("Error creating post")
 	  } finally {
 		  setIsLoading(false)
-		  toast('Post created successfully!')
+		
 	  }
 
   }
