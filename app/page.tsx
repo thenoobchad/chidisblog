@@ -75,7 +75,7 @@ const FeaturedPost = () => {
 
 	return (
 		<div className="w-full relative">
-			<a href={`/blog/${post.slug}`}>
+			<Link href={`/blog/${post.slug}`}>
 				<div className="h-58 w-full bg-zinc-700" />
 
 				<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
@@ -86,7 +86,7 @@ const FeaturedPost = () => {
 					size="text-lg"
 					text="Trump launches precision strikes is Nigeria, Sokoto as promised."
 				/>
-			</a>
+			</Link>
 			<p className="text-sm font-light">
 				Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
 				suscipit iusto vero dolores, eum perspiciatis.
