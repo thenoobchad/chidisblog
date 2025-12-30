@@ -8,6 +8,7 @@ import { Posts } from "@/constants";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 import Link from "next/link";
 
+
 type PostType = {
 	id: string;
 	tag: string;
@@ -44,7 +45,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
 					</div>
 
 					{data?.map((post) => (
-						<Link key={post.id} href={`/blog/${post.slug}`}>
+						<Link key={post.id} href={`/blog/${(post.slug).toLowerCase().normalize().trim()}`}>
 							<div className="w-full relative flex gap-4  border-y border-zinc-300">
 								<div className="h-20 min-w-30 bg-zinc-700" />
 								<div className="flex flex-col">

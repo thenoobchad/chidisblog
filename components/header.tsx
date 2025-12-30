@@ -6,7 +6,7 @@ export const Header = () => {
 		<div className="w-full h-full">
 			<div className="w-full border-b border-zinc-300">
 				<div className="flex justify-between px-10 items-center py-6 max-w-5xl mx-auto">
-					<Link href="/">
+					<Link href="/blog/the-main-guy">
 						<h1 className="text-lg font-bold">CHIDIBLOG</h1>
 					</Link>
 
