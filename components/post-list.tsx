@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type PostType = {
 	id: string;
@@ -11,12 +12,18 @@ type PostType = {
 };
 
 export default function PostList({ posts }: { posts: PostType[] }) {
+    const router = useRouter()
+
+    const handleClick = (link:string) => {
+        router.push(`/blog/${link}`)
+    }
 	return (
 		<div className="flex flex-col gap-2">
 			{posts?.map((post) => (
-				<Link
+                <div
+                    onClick={() => handleClick(post.slug)}
 					key={post.id}
-					href={`/blog/${post.slug.toLowerCase().normalize().trim()}`}>
+					>
 					<div className="w-full relative flex gap-4  border-y border-zinc-300">
 						<div className="h-20 min-w-30 bg-zinc-700" />
 						<div className="flex flex-col">
@@ -24,7 +31,7 @@ export default function PostList({ posts }: { posts: PostType[] }) {
 							<p className="text-xs">{post.content.slice(0, 100)}...</p>
 						</div>
 					</div>
-				</Link>
+				</div>
 			))}
 		</div>
 	);
