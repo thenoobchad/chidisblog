@@ -1,20 +1,22 @@
 
 
 import CommentForm from "@/components/comment-form";
+import { Header } from "@/components/header";
 import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
 
 
 
-export default async function PostPage({params}:{params: Promise<{slug: string}>}) {
+export default async function PostPage(params:{params: Promise<{slug: string}>}) {
 	
-	const { slug } = await params
+	const slug = (await params.params).slug
 	const post =  Posts.filter((item) => (item.slug === slug))[0]
 
 	console.log("the param",slug)
 
 	return (
-		<main className="w-full max-w-5xl mx-auto  flex flex-col lg:flex lg:flex-row relative ">
+		<main className="w-full max-w-5xl mx-auto  flex flex-col relative ">
+			<Header/>
 			<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col">
 				<div className="w-full relative">
 					<div className="h-58 w-full bg-zinc-700" />

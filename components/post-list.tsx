@@ -14,7 +14,8 @@ type PostType = {
 export default function PostList({ posts }: { posts: PostType[] }) {
     const router = useRouter()
 
-    const handleClick = (link:string) => {
+    const handleClick = (link: string) => {
+       
         router.push(`/blog/${link}`)
     }
 	return (

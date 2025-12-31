@@ -19,7 +19,7 @@ type PostType = {
 };
 
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ tag?: string }> }) {
+export default async function Home({ searchParams }: { searchParams: Promise<{ tag: string }> }) {
 	const {tag} = await searchParams
 	
 		const posts = await new Promise<PostType[]>((resolve) => {
@@ -64,8 +64,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
 	);
 }
 
-const FeaturedPost = () => {
-	const post = { slug: "my-first-post", title: "hello world" };
+const FeaturedPost = async () => {
+	const [post] = await new Promise<PostType[]>(resolve => {
+		return resolve(Posts)
+	})
 
 	return (
 		<div className="w-full relative">
@@ -73,19 +75,18 @@ const FeaturedPost = () => {
 				<div className="h-58 w-full bg-zinc-700" />
 
 				<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
-					<p className="uppercase font-extrabold"> technology</p>
+					<p className="uppercase font-extrabold"> {post.tag}</p>
 				</button>
 
 				<UnderlineHeading
 					size="text-lg"
-					text="Trump launches precision strikes is Nigeria, Sokoto as promised."
+					text={`${post.title}`}
 				/>
 			</Link>
 			<p className="text-sm font-light">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-				suscipit iusto vero dolores, eum perspiciatis.
+				{(post.content).slice(0, 100)}...
 			</p>
-			<p className=" uppercase text-xs my-1 text-zinc-500">Dec 20 - chuddi</p>
+			<p className=" capitalize text-xs my-1 text-zinc-500">Dec 20 - Chuddi</p>
 			<div className="flex justify-between px-2">
 				<div className="flex items-center gap-2">
 					<Heart className="text-zinc-500" size={20} />
