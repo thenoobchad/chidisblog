@@ -12,7 +12,6 @@ export default async function PostPage(params:{params: Promise<{slug: string}>})
 	const slug = (await params.params).slug
 	const post =  Posts.filter((item) => (item.slug === slug))[0]
 
-	console.log("the param",slug)
 
 	return (
 		<main className="w-full max-w-5xl mx-auto  flex flex-col relative ">
