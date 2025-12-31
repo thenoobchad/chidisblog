@@ -4,6 +4,7 @@ import CommentForm from "@/components/comment-form";
 import { Header } from "@/components/header";
 import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
+import Image from "next/image";
 
 
 
@@ -18,7 +19,9 @@ export default async function PostPage(params:{params: Promise<{slug: string}>})
 			<Header/>
 			<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col">
 				<div className="w-full relative">
-					<div className="h-58 w-full bg-zinc-700" />
+					<div className="h-80 md:h-100 lg:h-120 w-full bg-zinc-700 flex" >
+						<Image src={'/images/imagebg.png'} width={1000} height={700} alt="image" className="bg-cover"/>
+					</div>
 
 					<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
 						<p className="uppercase font-extrabold">{post?.tag}</p>

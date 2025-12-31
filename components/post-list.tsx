@@ -1,7 +1,7 @@
-"use client";
 
+
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 type PostType = {
 	id: string;
@@ -12,27 +12,24 @@ type PostType = {
 };
 
 export default function PostList({ posts }: { posts: PostType[] }) {
-    const router = useRouter()
-
-    const handleClick = (link: string) => {
-       
-        router.push(`/blog/${link}`)
-    }
+   
 	return (
 		<div className="flex flex-col gap-2">
 			{posts?.map((post) => (
-                <div
-                    onClick={() => handleClick(post.slug)}
+                <Link
+                    href={`/blog/${post.slug}`}
 					key={post.id}
 					>
-					<div className="w-full relative flex gap-4  border-y border-zinc-300">
-						<div className="h-20 min-w-30 bg-zinc-700" />
+					<div className="w-full relative  gap-4  border-y border-zinc-300 flex">
+						<div className="h-20 max-w-40 bg-zinc-700 flex" >
+							<Image src={'/images/imagebg.png'} alt="image" width={700} height={700} className=" bg-cover" />
+						</div>
 						<div className="flex flex-col">
 							<h1 className="font-bold"> {`${post.title}`}</h1>
 							<p className="text-xs">{post.content.slice(0, 100)}...</p>
 						</div>
 					</div>
-				</div>
+				</Link>
 			))}
 		</div>
 	);

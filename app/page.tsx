@@ -7,6 +7,7 @@ import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
 
 import { Heart, MessageCircle, Share2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -72,7 +73,9 @@ const FeaturedPost = async () => {
 	return (
 		<div className="w-full relative">
 			<Link href={`/blog/${post.slug}`}>
-				<div className="h-58 w-full bg-zinc-700" />
+				<div className="h-68 md:h-88 lg:h-100 lg: w-full bg-zinc-700 flex" >
+					<Image src={"/images/imagebg.png"} alt="image" width={700} height={700} className="bg-contain"/>
+				</div>
 
 				<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
 					<p className="uppercase font-extrabold"> {post.tag}</p>
@@ -84,10 +87,10 @@ const FeaturedPost = async () => {
 				/>
 			</Link>
 			<p className="text-sm font-light">
-				{(post.content).slice(0, 100)}...
+				{(post.content).slice(0, 180)}...
 			</p>
 			<p className=" capitalize text-xs my-1 text-zinc-500">Dec 20 - Chuddi</p>
-			<div className="flex justify-between px-2">
+			{/* <div className="flex justify-between px-2">
 				<div className="flex items-center gap-2">
 					<Heart className="text-zinc-500" size={20} />
 					<span className="text-xs text-zinc-500">354</span>
@@ -99,7 +102,7 @@ const FeaturedPost = async () => {
 				<div>
 					<Share2 size={20} className="text-zinc-500" />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };
