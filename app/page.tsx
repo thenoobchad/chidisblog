@@ -20,19 +20,31 @@ type PostType = {
 };
 
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ tag: string }> }) {
-	const {tag} = await searchParams
-	
-		const posts = await new Promise<PostType[]>((resolve) => {
-			return setTimeout(() => resolve(Posts), 2000)
-		});
-		
-	const data = tag ? posts.filter(post => post.tag.toLowerCase() === tag) : posts
+export default async function Home({
+	searchParams
+}: {
+	searchParams: Promise<{tag?: string, query?: string}>;
+}) {
+	const {tag} = (await searchParams) || ""
+	const {query} = (await searchParams) || ""
+
+	const posts = await new Promise<PostType[]>((resolve) => {
+		return setTimeout(() => resolve(Posts), 2000);
+	});
+
+	const data = tag
+		? posts.filter((post) => post.tag.toLowerCase() === tag)
+		: posts;
+
+	const filteredPosts = data.filter((post) => {
+		return post.title.toLowerCase().includes(query!) || post.content.toLowerCase().includes(query!)
+
+	})
 
 	return (
 		<>
 			<Header />
-			<NavigationHeader />
+			<NavigationHeader posts={posts} />
 			<main className="w-full max-w-5xl mx-auto  flex flex-col lg:flex lg:flex-row relative">
 				<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col lg:w-3/4">
 					<div className="flex flex-row gap-2 items-center w-full">
@@ -45,11 +57,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
 						<h4 className="text-sm font-bold uppercase">Recent </h4>
 						<div className="w-full h-px bg-zinc-300" />
 					</div>
-
-					<PostList posts={data} />
-
 					
-
+						<PostList posts={data} />
+				
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap"></h4>
 						<div className="w-full h-px bg-zinc-300" />
