@@ -21,8 +21,8 @@ export default function PostList({ posts }: { posts: PostType[] }) {
 					key={post.id}
 					>
 					<div className="w-full relative  gap-4  border-y border-zinc-300 flex">
-						<div className="h-20 max-w-40 bg-zinc-700 flex" >
-							<Image src={'/images/imagebg.png'} alt="image" width={700} height={700} className=" bg-cover" />
+						<div className="h-20 min-w-40 bg-zinc-700 flex relative overflow-hidden" >
+							<Image src={'/images/imagebg.png'} alt="image" fill className="bg-cover bg-center" />
 						</div>
 						<div className="flex flex-col">
 							<h1 className="font-bold"> {`${post.title}`}</h1>

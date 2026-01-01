@@ -133,10 +133,21 @@ const FeaturedPost = async () => {
 					<p className="uppercase font-extrabold"> {post.tag}</p>
 				</button>
 
-				<UnderlineHeading size="text-lg" text={`${post.title}`} />
+				<UnderlineHeading size="text-lg pt-4" text={`${post.title}`} />
 			</Link>
 			<p className="text-sm font-light">{post.content.slice(0, 180)}...</p>
-			<p className=" capitalize text-xs my-1 text-zinc-500">Dec 20 - Chuddi</p>
+			<div className="flex gap-4 py-4">
+				<p className=" uppercase text-xs my-1 text-zinc-500 bg-zinc-300 px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
+					<span className="h-3 w-3 rounded-full bg-zinc-800" />
+					December 20, 2005 - chuddi
+				</p>
+
+				<p className=" uppercase text-xs my-1 text-white bg-zinc-800 px-2 py-1 w-fit outline-2 outline-zinc-800 flex gap-2 items-center">
+					<span className="h-3 w-3 rounded-full bg-white" />
+					View similar stories
+				</p>
+			</div>
+
 			{/* <div className="flex justify-between px-2">
 				<div className="flex items-center gap-2">
 					<Heart className="text-zinc-500" size={20} />
