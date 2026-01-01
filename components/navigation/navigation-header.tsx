@@ -83,7 +83,7 @@ export const NavigationHeader = ({ posts }: { posts: PostType[] }) => {
 					/>
 
 					{isOpen && query.length > 0 && (
-						<ul className="absolute left-18 top-18 z-50 bg-amber-50 min-w-75 max-h-[100px] overflow-y-auto flex flex-col gap-2 p-2">
+						<ul className="absolute left-18 top-18 z-50 bg-amber-50 min-w-75 overflow-y-auto flex flex-col gap-2 p-2">
 							{filteredPosts.length > 0 ? (
 								filteredPosts.map((post) => (
 									<li key={post.id} className="text-xs ">
