@@ -7,7 +7,6 @@ import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
 import { ArrowBigLeft, ArrowLeft, ArrowRight } from "lucide-react";
 
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -28,7 +27,6 @@ export default async function Home({ params, searchParams }: Props) {
 	const { page } = await params;
 	const postsPerPage = 15;
 	const currentPage = page && page[0] ? parseInt(page[0]) : 1;
-	
 
 	//calculate the range
 	const indexOfLastPost = currentPage * postsPerPage;
@@ -42,8 +40,8 @@ export default async function Home({ params, searchParams }: Props) {
 
 	const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-	console.log("this is the tag",tag)
-	
+	console.log("this is the tag", tag);
+
 	const totalPages = Math.ceil(posts.length / postsPerPage);
 
 	const filteredPost = tag
@@ -56,11 +54,16 @@ export default async function Home({ params, searchParams }: Props) {
 			<NavigationHeader posts={posts} />
 			<main className="w-full max-w-5xl mx-auto  flex flex-col lg:flex lg:flex-row relative">
 				<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col lg:w-3/4">
-					<div className="flex flex-row gap-2 items-center w-full">
-						<h4 className="text-sm font-bold uppercase">feat. </h4>
-						<div className="w-full h-px bg-zinc-300" />
-					</div>
-					{tag === undefined && <FeaturedPost />}
+					{tag === undefined && (
+						<>
+							{" "}
+							<div className="flex flex-row gap-2 items-center w-full">
+								<h4 className="text-sm font-bold uppercase">feat. </h4>
+								<div className="w-full h-px bg-zinc-300" />
+							</div>
+							<FeaturedPost />
+						</>
+					)}
 
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap">
@@ -117,13 +120,12 @@ const FeaturedPost = async () => {
 	return (
 		<div className="w-full relative">
 			<Link href={`/blog/${post.slug}`}>
-				<div className="h-68 md:h-88 lg:h-100 lg: w-full bg-zinc-700 flex">
+				<div className="h-68 md:h-88 lg:h-100 lg: w-full flex relative overflow-hidden">
 					<Image
 						src={"/images/imagebg.png"}
 						alt="image"
-						width={700}
-						height={700}
-						className="bg-contain"
+						fill
+						className="bg-cover"
 					/>
 				</div>
 
