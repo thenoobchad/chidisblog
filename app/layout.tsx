@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import localFont from "next/font/local";
 import "./globals.css";
+import { AuthProvider } from "../context/admin-context";
 
 const poppins = localFont({
 	src: [
@@ -37,7 +38,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={` ${poppins.className}`}>{children}</body>
+			<body className={` ${poppins.className}`}>
+				<AuthProvider>{children}</AuthProvider>
+			</body>
 		</html>
 	);
 }

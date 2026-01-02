@@ -2,8 +2,11 @@
 
 import { Library, Users } from "lucide-react";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { LineChart } from "@mui/x-charts";
+import { useAuth } from "@/context/admin-context";
 
 export default function AdminPage() {
+	
 	return (
 		<main className="flex w-full flex-col  p-4">
 			<div className="flex gap-4">
@@ -25,21 +28,15 @@ export default function AdminPage() {
 
 			<h1 className="py-5">Stats</h1>
 			<div className="w-full h-full">
-				<BarChart
-					xAxis={[
-						{
-							id: "barCategories",
-              data: ["bar A", "bar B", "bar C"],
-              
-						},
-					]}
+				<LineChart
+					xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
 					series={[
 						{
-							data: [2, 5, 3],
+							data: [2, 5.5, 2, 8.5, 1.5, 5],
+							area: true,
 						},
 					]}
-          height={300}
-          className="text-zinc-700"
+					height={300}
 				/>
 			</div>
 		</main>
