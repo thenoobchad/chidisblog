@@ -1,40 +1,22 @@
-"use client"
+"use client";
 
+import { auth, db } from "@/lib/firebase";
 
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { File, FilePlus } from "lucide-react";
+import Image from "next/image";
 import { FormEvent, useState } from "react";
 
-
 export default function PostPage() {
-const [isLoading, setIsLoading] = useState(false)
-	const [title, setTitle] = useState("")
+	const [isLoading, setIsLoading] = useState(false);
+	const [title, setTitle] = useState("");
 	const [slug, setSlug] = useState(title);
-	
+	const [imageFile, setImageFile] = useState<File | null>(null);
+	const [error, setError] = useState(null)
 	const [content, setContent] = useState("");
-	 const [isEdited, setIsEdited] = useState(false);
-  const [image, setImage] = useState(null)
+	const [isEdited, setIsEdited] = useState(false);
 
-  const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-setIsLoading(true)
-	  const newPost = {
-		  id: crypto.randomUUID(),
-		  title,
-		  slug,
-		  content,
-   }
-	  try {
-		  console.log(newPost)
-		// Handle backend submit here
-	  } catch (error) {
-		  console.error(error)
-	  } finally {
-		  setIsLoading(false)
-		
-	  }
-
-  }
-	
-	const createSlug = (text: string):string => {
+	const createSlug = (text: string): string => {
 		return text
 			.toLowerCase()
 			.trim()
@@ -43,14 +25,66 @@ setIsLoading(true)
 			.replace(/[^a-z0-9\s-]/g, "")
 			.replace(/[\s-]+/g, "-")
 			.replace(/^-+|-+$/g, "");
-	}
-  return (
+	};
+
+
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setError("")
+		setIsLoading(true);
+		
+		try {
+			const postRef = collection(db, "posts");
+
+			await addDoc(postRef, {
+				title: title,
+				slug: slug,
+				content:content,
+				authorId: auth.currentUser?.uid,
+				createdAt: serverTimestamp(),
+			});
+			
+			setTitle("");
+			setSlug("");
+			setContent("");
+		} catch (error) {
+			console.error(error);
+			setError('Failed to create post')
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
+	
+	return (
 		<div className="p-4 w-full h-full">
 			<h1 className="py-5">Create Post</h1>
 			<form onSubmit={handleSubmit} className="max-w-90 flex flex-col gap-3">
 				<div className="flex flex-col gap-2">
-					<label htmlFor="title">Select Image (jpg/jpeg/png)</label>
-					{image && <img src={"./"} alt="image" />}
+					<label htmlFor="file">
+						Select Image (jpg/jpeg/png)
+						<input
+							id="file"
+							hidden
+							type="file"
+							accept="image/*"
+							onChange={(e) => {
+								setImageFile(e.target.files[0]);
+							}}
+						/>
+						<div className="h-15 w-21 relative overflow-hidden">
+							{imageFile ? (
+								<Image
+									src={URL?.createObjectURL(imageFile)}
+									alt="image"
+									fill
+									className="bg-cover bg-center"
+								/>
+							) : (
+								<FilePlus size={40} />
+							)}
+						</div>
+					</label>
 				</div>
 				<div className="flex flex-col gap-2">
 					<label htmlFor="title">Title</label>
@@ -96,12 +130,11 @@ setIsLoading(true)
 						className="bg-zinc-300 px-2 py-3 outline-none"
 					/>
 				</div>
-
+				{error && <p>{error}</p>}
 				<button className="bg-white text-zinc-900 px-6 py-2 mt-4 border-3 border-zinc-900 text-xs shadow-[6px_6px_0px_#000] w-fit active:scale-98 active:shadow-[0px_0px_0px_#000] tracking-wide">
 					<h4>{isLoading ? "Creating Post" : "Send Post"}</h4>
 				</button>
-		  </form>
-		 
+			</form>
 		</div>
 	);
 }

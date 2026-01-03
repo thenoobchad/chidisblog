@@ -11,11 +11,7 @@ export default function Adminlayout({ children }: { children: ReactNode }) {
 	const router = useRouter();
 	const {user, loading} = useAuth()
 
-	useEffect(() => {
-		if (!user || user.uid !== "Cg1MMHPLibO5Qlue9xDs36pmV073") {
-			router.push("/login");
-		}
-	}, []);
+	
 
 	return (
 		<main className="w-full h-screen mx-auto max-w-7xl  flex flex-col relative bg-white text-zinc-800">
@@ -28,7 +24,7 @@ export default function Adminlayout({ children }: { children: ReactNode }) {
 					</div>
 					<div className=" w-full h-full relative flex">
 						<AdminSidebar />
-						{children}
+						<div >{children}</div>
 					</div>
 				</>
 			)}

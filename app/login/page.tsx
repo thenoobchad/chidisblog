@@ -1,16 +1,24 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import {  FormEvent, useEffect, useState } from "react";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import { auth } from "../../lib/firebase";
+import { auth } from "@/lib/firebase";
 
 import Box from "@mui/material/Box";
+import { useAuth } from "@/context/admin-context";
 
 export default function AuthPage() {
+const {user, loading:isPending} = useAuth()
+	useEffect(() => {
+			if (user || user?.uid == "Cg1MMHPLibO5Qlue9xDs36pmV073") {
+				router.push("/admin");
+			}
+	}, [user]);
+	
 	const [authForm, setAuthForm] = useState("sign-in");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -68,6 +76,8 @@ export default function AuthPage() {
 			setLoading(false);
 		}
 	};
+
+	if(isPending) return <p>Loading...</p>
 
 	return (
 		<div className="w-full bg-white h-screen flex items-center justify-center">

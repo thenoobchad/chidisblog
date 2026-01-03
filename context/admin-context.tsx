@@ -1,13 +1,17 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "../lib/firebase";
+
 import { onAuthStateChanged, User } from "firebase/auth";
+
+import { auth } from "@/lib/firebase";
 
 
 const AuthContext = createContext < { user: User | null; loading: boolean }>(null)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+
+    
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState<User | null>(null)
 
