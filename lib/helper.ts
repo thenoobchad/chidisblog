@@ -1,13 +1,6 @@
-"use client" 
+import { formatDistanceToNow } from "date-fns"
 
-import { auth, db, storage } from "@/lib/firebase"
-
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
-
-
-
-
-export async function createPost(newPost) {
-  
-
+export const displayTime = ( timestamp ) => {
+    const date = timestamp.toDate()
+    return formatDistanceToNow(date, {addSuffix: true})
 }

@@ -1,23 +1,20 @@
 "use client";
 
 import { Library, Users } from "lucide-react";
-import { BarChart } from "@mui/x-charts/BarChart";
-import { LineChart } from "@mui/x-charts";
+
 import { useAuth } from "@/context/admin-context";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-
-
 export default function AdminPage() {
-	const router = useRouter()
-const { user } = useAuth();
+	const router = useRouter();
+	const { user } = useAuth();
 	useEffect(() => {
-				if (!user || user?.uid !== "Cg1MMHPLibO5Qlue9xDs36pmV073") {
-					router.push("/login");
-				}
-		}, [user]);
-	
+		if (!user || user?.uid !== "Cg1MMHPLibO5Qlue9xDs36pmV073") {
+			router.push("/login");
+		}
+	}, []);
+
 	return (
 		<main className="flex w-full flex-col  p-4">
 			<div className="flex gap-4">
