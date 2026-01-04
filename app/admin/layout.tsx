@@ -18,15 +18,15 @@ export default function Adminlayout({ children }: { children: ReactNode }) {
 			{loading ? (
 				<div className="h-15 w-15 border-t-3 border-r-3 animate-spin rounded-full" />
 			) : (
-				<>
-					<div className="w-full">
+				<div className="h-full w-full relative">
+					<div className="w-full ">
 						<AdminHeader user={user} />
 					</div>
-					<div className=" w-full h-full  relative flex">
+					<div className=" w-full h-full relative flex">
 						<AdminSidebar />
-						<div className="overflow-y-auto w-full">{children}</div>
+						<div className="overflow-y-auto w-full min-h-screen">{children}</div>
 					</div>
-				</>
+				</div>
 			)}
 		</main>
 	);

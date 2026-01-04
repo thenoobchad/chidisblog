@@ -14,18 +14,18 @@ export default function CommentForm() {
 				<textarea
 					placeholder="comment..."
 					rows={3}
-					className="outline-none bg-zinc-100 p-2"
+					className="outline-none bg-[#ddead1] p-2"
 				/>
 				<div className="flex gap-2 flex-col sm:flex-row">
 					<input
 						type="text"
 						placeholder="Email"
-						className="outline-none bg-zinc-100 p-2 w-full"
+						className="outline-none bg-[#ddead1] p-2 w-full"
 					/>
 					<input
 						type="text"
 						placeholder="Name"
-						className="outline-none bg-zinc-100 p-2 w-full"
+						className="outline-none bg-[#ddead1] p-2 w-full"
 					/>
 				</div>
 

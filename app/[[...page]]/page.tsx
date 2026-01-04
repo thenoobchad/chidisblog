@@ -67,7 +67,7 @@ export default async function Home({ params, searchParams }: Props) {
 
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap">
-							{tag === undefined ? <p>Recent news</p> : <p>{tag}</p>}{" "}
+							{tag === undefined ? <p>Recent news</p> : <p>className{tag}</p>}{" "}
 						</h4>
 						<div className="w-full h-px bg-zinc-300" />
 					</div>
@@ -137,7 +137,7 @@ const FeaturedPost = async () => {
 			</Link>
 			<p className="text-sm font-light">{post.content.slice(0, 180)}...</p>
 			<div className="flex gap-4 py-4">
-				<p className=" uppercase text-xs my-1 text-zinc-500 bg-zinc-300 px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
+				<p className=" uppercase text-xs my-1 text-zinc-500 bg-[#ddead1] px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
 					<span className="h-3 w-3 rounded-full bg-zinc-800" />
 					December 20, 2005 - chuddi
 				</p>

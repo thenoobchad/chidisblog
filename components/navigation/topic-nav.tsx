@@ -16,7 +16,7 @@ export const TopicNavigation = ({
 	return (
 		<h4
 			onClick={onSelect ? () => onSelect(text) : undefined}
-			className={`${textClass} relative w-fit my-9 z-10 uppercase text-sm font-bold text-zinc-500 ${
+			className={`${textClass} relative w-fit my-9 z-10 uppercase text-sm font-bold text-[#6c7c59] ${
 				isSelected === text ? "text-zinc-900" : ""
 			}`}>
 			{text}

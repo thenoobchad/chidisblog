@@ -26,7 +26,7 @@ export default function PostList({ posts }: { posts: PostType[] }) {
 						</div>
 						<div className="flex flex-col">
 							<h1 className="font-bold"> {`${post.title}`}</h1>
-							<p className="text-xs">{post.content.slice(0, 100)}...</p>
+							<p className="text-xs text-justify">{post.content.slice(0, 100)}...</p>
 						</div>
 					</div>
 				</Link>

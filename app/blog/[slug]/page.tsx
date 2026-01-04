@@ -38,7 +38,7 @@ export default async function PostPage(params:{params: Promise<{slug: string}>})
 						{post?.content}
 					</p>
 					<div className="flex gap-4">
-						<p className=" uppercase text-xs my-1 text-zinc-500 bg-zinc-300 px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
+						<p className=" uppercase text-xs my-1 text-zinc-500 bg-[#ddead1] px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
 							<span className="h-3 w-3 rounded-full bg-zinc-800" />
 							December 20, 2005 - chuddi
 						</p>
