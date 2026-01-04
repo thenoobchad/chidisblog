@@ -11,15 +11,17 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { displayTime } from "@/lib/helper";
-import { Edit, Trash } from "lucide-react";
+import { ClosedCaption, Cross, Edit, Trash, X } from "lucide-react";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { title } from "process";
+import { Button } from "@/components/ui/button";
 
 type SelectedPostType = {
 	id: string;
 	title: string;
 	slug: string;
 	content: string;
+	tag: string;
 };
 
 export default function BlogsPage() {
@@ -65,9 +67,9 @@ export default function BlogsPage() {
 		const docRef = doc(db, "posts", id);
 		const document = (await getDoc(docRef)).data();
 
-		const { title, slug, content } = document;
+		const { title, slug, content, tag } = document;
 
-		setSelectedPost({ id: id, title: title, slug: slug, content: content });
+		setSelectedPost({ id: id, title: title, slug: slug, content: content, tag: tag });
 		setIsOpen(true);
 		console.log(selectedPost);
 	};
@@ -95,6 +97,7 @@ export default function BlogsPage() {
 			await updateDoc(postRef, {
 				title: selectedPost.title,
 				slug: selectedPost.slug,
+				tag: selectedPost.tag,
 				content: selectedPost.content,
 			});
 			setIsOpen(false);
@@ -106,6 +109,10 @@ export default function BlogsPage() {
 		}
 	};
 
+		const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+			setSelectedPost({ ...selectedPost, tag: e.target.value });
+		};
+
 	return (
 		<div className="p-4 flex flex-col  w-full h-full ">
 			<h1 className="pb-14">Blog Posts</h1>
@@ -115,33 +122,43 @@ export default function BlogsPage() {
 						<div
 							key={post?.id}
 							className="flex justify-between gap-1 w-full max-w-2xl border p-2 border-zinc-100 ">
-							<div className="flex flex-col lg:gap-2 lg:flex-row ">
-								<h1 className="text-sm">{post?.title}</h1>
-								<p className="text-[12px] text-zinc-500">
-									{(post?.content).slice(0, 100)}...
-								</p>
+							<div className="flex gap-4">
+								<img src={post?.image} alt="image" className="h-9 w-9" />
+								<div className="flex flex-col lg:gap-2 lg:flex-row ">
+									<h1 className="text-sm">{post?.title}</h1>
+									<p className="text-[12px] text-zinc-500">
+										{(post?.content).slice(0, 100)}...
+									</p>
+								</div>
 							</div>
 							<div className="flex gap-2">
 								{post?.createdAt ? (
-									<p className="text-[10px] text-blue-400">
-										{displayTime(post?.createdAt)}
-									</p>
+									<div className="flex flex-col">
+										<p className="text-[10px] text-blue-400">
+											{displayTime(post?.createdAt)}
+										</p>
+										<span className="text-[10px] text-red-500  w-fit p-0.5 rounded">
+											{post?.tag}
+										</span>
+									</div>
 								) : (
 									"Loading..."
 								)}
-								<div className="flex gap-2">
-									<Edit
-										size={18}
-										className="text-blue-400"
-										onClick={() => handleEdit(post?.id)}
-									/>
+								<div className="flex flex-col ">
+									<div className="flex gap-2">
+										<Edit
+											size={18}
+											className="text-blue-400"
+											onClick={() => handleEdit(post?.id)}
+										/>
 
-									<Trash
-										onClick={() => handleDelete(post?.id)}
-										color="red"
-										fill="red"
-										size={18}
-									/>
+										<Trash
+											onClick={() => handleDelete(post?.id)}
+											color="red"
+											fill="red"
+											size={18}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -153,7 +170,10 @@ export default function BlogsPage() {
 
 			{isOpen && (
 				<div className="absolute top-30  bg-white p-2 outline-2 px-4  max-w-90">
-					<h1 className="py-2 font-bold text-lg text-center">Edit Post</h1>
+					<h1 className="py-2 font-bold text-lg text-center flex justify-between items-center">
+						Edit Post
+						<X onClick={() => setIsOpen(false)} />
+					</h1>
 					<form onSubmit={handleUpdate} className="flex flex-col gap-4">
 						<div className="flex flex-col gap-2">
 							<label htmlFor="title" className="text-zinc-700">
@@ -179,6 +199,22 @@ export default function BlogsPage() {
 								onChange={handleInputChange}
 							/>
 						</div>
+
+						<div className="flex flex-col gap-2">
+							<label htmlFor="category">Category</label>
+							<select
+								name="category"
+								id=""
+								value={selectedPost?.tag}
+								onChange={handleSelect}
+								className="bg-zinc-300 px-2 py-3 outline-none">
+								<option value="politics">Politics</option>
+								<option value="economy">Economy</option>
+								<option value="science">Science</option>
+								<option value="lifestyle">Lifestyle</option>
+								<option value="travel">Travel</option>
+							</select>
+						</div>
 						<div className="flex flex-col gap-2">
 							<label htmlFor="content">Content</label>
 							<textarea
@@ -188,9 +224,8 @@ export default function BlogsPage() {
 								onChange={handleTextareaChange}
 							/>
 						</div>
-						<button className="bg-white text-zinc-900 px-6 py-2 mt-4 border-3 border-zinc-900 text-xs shadow-[4px_4px_0px_#000] w-full active:scale-98 active:shadow-[0px_0px_0px_#000] tracking-wide">
-							<h4>{isLoading ? "Updating Post" : "Update"}</h4>
-						</button>
+
+						<Button>{isLoading ? "Updating Post" : "Update"}</Button>
 					</form>
 				</div>
 			)}

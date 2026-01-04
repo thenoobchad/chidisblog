@@ -1,18 +1,29 @@
 "use client";
 
 import { auth, db } from "@/lib/firebase";
+import { CldUploadWidget } from "next-cloudinary";
 
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { File, FilePlus } from "lucide-react";
+
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+
+
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { FormEvent, useState } from "react";
+
+
 
 export default function PostPage() {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false);
 	const [title, setTitle] = useState("");
 	const [slug, setSlug] = useState(title);
-	const [imageFile, setImageFile] = useState<File | null>(null);
-	const [error, setError] = useState(null)
+	const [category, setCategory] = useState("");
+	(null);
+	const [imageFileLoading, setImageFileLoading] = useState(false);
+	const [imageFileUrl, setImageFileUrl] = useState<string | null>(null);
+	const [error, setError] = useState(null);
 	const [content, setContent] = useState("");
 	const [isEdited, setIsEdited] = useState(false);
 
@@ -28,64 +39,69 @@ export default function PostPage() {
 	};
 
 
+	const handleSuccess = async (result) => {
+	
+		setImageFileUrl(result.info.secure_url);
+		
+	};
+
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setError("")
+		setError("");
 		setIsLoading(true);
+
 		
+		setImageFileLoading(true);
+
 		try {
 			const postRef = collection(db, "posts");
 
 			await addDoc(postRef, {
 				title: title,
 				slug: slug,
-				content:content,
+				content: content,
+				tag: category,
 				authorId: auth.currentUser?.uid,
+				image: imageFileUrl,
 				createdAt: serverTimestamp(),
 			});
-			
+
+			console.log(title, slug, content, category, imageFileUrl)
+
 			setTitle("");
 			setSlug("");
-			setContent("");
+			setContent("")
+			setCategory("")
+			setImageFileUrl(null);
+			router.push("/admin/blog");
 		} catch (error) {
 			console.error(error);
-			setError('Failed to create post')
+			setError("Failed to create post");
 		} finally {
 			setIsLoading(false);
 		}
 	};
 
-	
+
+	const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+		setCategory(e.target.value)
+		console.log(category)
+	}
 	return (
 		<div className="p-4 w-full h-full">
 			<h1 className="py-5">Create Post</h1>
 			<form onSubmit={handleSubmit} className="max-w-90 flex flex-col gap-3">
-				<div className="flex flex-col gap-2">
-					<label htmlFor="file">
-						Select Image (jpg/jpeg/png)
-						<input
-							id="file"
-							hidden
-							type="file"
-							accept="image/*"
-							onChange={(e) => {
-								setImageFile(e.target.files[0]);
-							}}
-						/>
-						<div className="h-15 w-21 relative overflow-hidden">
-							{imageFile ? (
-								<Image
-									src={URL?.createObjectURL(imageFile)}
-									alt="image"
-									fill
-									className="bg-cover bg-center"
-								/>
-							) : (
-								<FilePlus size={40} />
-							)}
-						</div>
-					</label>
-				</div>
+				<CldUploadWidget
+					uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+					onSuccess={handleSuccess}>
+					{({ open }) => (
+						<button onClick={() => open()}>
+							{imageFileUrl ? "uploaded." : "Upload Image"}
+						</button>
+					)}
+				</CldUploadWidget>
+				{imageFileUrl && <img src={imageFileUrl} alt="image"  className="h-30 w-30 bg-cover"  />}
+
 				<div className="flex flex-col gap-2">
 					<label htmlFor="title">Title</label>
 					<input
@@ -120,6 +136,21 @@ export default function PostPage() {
 				</div>
 
 				<div className="flex flex-col gap-2">
+					<label htmlFor="category">Category</label>
+					<select
+						name="category"
+						id=""
+						onChange={handleSelect}
+						className="bg-zinc-300 px-2 py-3 outline-none">
+						<option value="politics">Politics</option>
+						<option value="economy">Economy</option>
+						<option value="science">Science</option>
+						<option value="lifestyle">Lifestyle</option>
+						<option value="travel">Travel</option>
+					</select>
+				</div>
+
+				<div className="flex flex-col gap-2">
 					<label htmlFor="title">Content</label>
 					<textarea
 						value={content}
@@ -131,9 +162,8 @@ export default function PostPage() {
 					/>
 				</div>
 				{error && <p>{error}</p>}
-				<button className="bg-white text-zinc-900 px-6 py-2 mt-4 border-3 border-zinc-900 text-xs shadow-[6px_6px_0px_#000] w-fit active:scale-98 active:shadow-[0px_0px_0px_#000] tracking-wide">
-					<h4>{isLoading ? "Creating Post" : "Send Post"}</h4>
-				</button>
+
+				<Button>{isLoading ? "Creating Post" : "Send Post"}</Button>
 			</form>
 		</div>
 	);
