@@ -6,6 +6,7 @@ import Link from "next/link";
 type PostType = {
 	id: string;
 	tag: string;
+	image: string;
 	title: string;
 	slug: string;
 	content: string;
@@ -21,8 +22,8 @@ export default function PostList({ posts }: { posts: PostType[] }) {
 					key={post.id}
 					>
 					<div className="w-full relative  gap-4  border-y border-zinc-300 flex">
-						<div className="h-20 min-w-40 bg-zinc-700 flex relative overflow-hidden" >
-							<Image src={'/images/imagebg.png'} alt="image" fill className="bg-cover bg-center" />
+						<div className="h-20 min-w-40  flex relative overflow-hidden" >
+							<Image src={post.image} alt="image" fill className="object-cover" />
 						</div>
 						<div className="flex flex-col">
 							<h1 className="font-bold"> {`${post.title}`}</h1>
