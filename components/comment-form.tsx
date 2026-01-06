@@ -5,14 +5,13 @@ import { db } from "@/lib/firebase";
 import { FormEvent, useEffect, useState } from "react";
 import {
 	collection,
-	getDocs,
 	onSnapshot,
 	query,
-	where,
 	orderBy,
 	serverTimestamp,
 	addDoc,
 } from "firebase/firestore";
+import { displayTime } from "@/lib/helper";
 
 export default function CommentForm({ postId }: { postId: string }) {
 	const [userName, setUserName] = useState("");
@@ -29,7 +28,7 @@ export default function CommentForm({ postId }: { postId: string }) {
 			userEmail,
 			comment,
 			userName,
-			createdAt: JSON.parse(JSON.stringify(serverTimestamp())),
+			createdAt: serverTimestamp(),
 		};
 
 		console.log(formData);
@@ -48,41 +47,48 @@ export default function CommentForm({ postId }: { postId: string }) {
 		}
 	};
 
-	
-
 	useEffect(() => {
-	const commentsQuery = query(
-		collection(db, "posts", postId, "comments"),
-		orderBy("createdAt", "desc")
-	);
+		const commentsQuery = query(
+			collection(db, "posts", postId, "comments"),
+			orderBy("createdAt", "desc")
+		);
 
-	const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
-		const comments = [];
-		snapshot.forEach((doc) => {
-			console.log(doc, "doc here");
-			comments.push({ id: doc.id, ...doc.data() });
+		const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
+			const comments = [];
+			snapshot.forEach((doc) => {
+				console.log(doc, "doc here");
+				comments.push({ id: doc.id, ...doc.data() });
+			});
+
+			setComments(comments);
 		});
 
-		setComments(comments);
-	});
-
-	return () => {
-		unsubscribe();
-	};
-}, [postId]);
+		return () => {
+			unsubscribe();
+		};
+	}, [postId]);
 
 	return (
 		<div>
 			<div>
-				{comments.map((comment) => (
-							<div key={comment.id} className="border-b border-zinc-200 py-4">
+				{comments.length > 0 &&
+					comments.map((comment) => (
+						<div
+							key={comment.id}
+							className="border-b border-zinc-200 py-4 flex max-w-100 justify-between">
+							<div>
 								<p className="text-sm font-semibold">{comment.userName}</p>
 								<p className="text-xs text-zinc-500">
 									{comment.userEmail ?? "Guest"}
 								</p>
 								<p className="mt-2">{comment.comment}</p>
 							</div>
-						))}
+
+							<p className="text-xs text-zinc-500">
+								{displayTime(comment?.createdAt)}
+							</p>
+						</div>
+					))}
 			</div>
 			<form onSubmit={handleSubmit} className="w-full">
 				<div className="w-full flex flex-col gap-2">
