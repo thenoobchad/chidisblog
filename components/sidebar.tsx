@@ -1,3 +1,4 @@
+import { SendHorizonal } from "lucide-react";
 
 
 export default function Sidebar() {
@@ -9,14 +10,18 @@ export default function Sidebar() {
 				digest of the most significant global events, cultural shifts, and
 				stories you might have missed—delivered straight to your inbox.
 			</p>
-			<div className="outline w-fit my-4 shadow-[6px_6px_0px_#000] whitespace-nowrap">
-				<input
-					type="email"
-					placeholder="Enter your email"
-					className="px-4 max-w-75 outline-none text-sm"
-				/>
-				<button className="bg-green-950 text-white p-2 text-sm uppercase">Subscribe</button>
+			<div className="w-full md:w-75">
+				<div className="outline w-full my-4 shadow-[6px_6px_0px_#000] ">
+					<input
+						type="email"
+						placeholder="Enter your email"
+						className="px-4  outline-none text-sm"
+					/>
+					<button className="bg-green-950 text-white p-2 text-sm uppercase">
+						<SendHorizonal/>
+					</button>
+				</div>
 			</div>
 		</div>
-	);
+	); 
 }
