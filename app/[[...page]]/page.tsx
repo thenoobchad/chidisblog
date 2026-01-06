@@ -125,7 +125,7 @@ export default async function Home({ params, searchParams }: Props) {
 }
 
 const FeaturedPost = async ({ posts }) => {
-	const post = posts[1];
+	const post = posts[0];
 	
 	return (
 		<div className="w-full relative">
@@ -140,12 +140,12 @@ const FeaturedPost = async ({ posts }) => {
 				</div>
 
 				<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
-					<p className="uppercase font-extrabold"> {post.tag ?? "Featured"}</p>
+					<p className="uppercase font-extrabold"> {post?.tag ?? "Featured"}</p>
 				</button>
 
 				<UnderlineHeading size="text-lg pt-4" text={`${post?.title}`} />
 			</Link>
-			<p className="text-sm font-light">{post.content.slice(0, 180)}...</p>
+			<p className="text-sm font-light">{post?.content.slice(0, 180)}...</p>
 			<div className="flex gap-4 py-4">
 				<p className=" uppercase text-xs my-1 text-zinc-500 bg-[#ddead1] px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
 					<span className="h-3 w-3 rounded-full bg-zinc-800" />
