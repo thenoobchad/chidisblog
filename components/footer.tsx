@@ -17,7 +17,7 @@ export default function Footer() {
 						</div>
 
 						{/* Quick Links */}
-						<div className="flex flex-col items-center">
+						<div className="flex flex-col ">
 							<h3 className="py-2">Quick Links</h3>
 							<ul className="underline text-sm text-zinc-100">
 								<li>
@@ -36,7 +36,7 @@ export default function Footer() {
 						</div>
 
 						{/* Social & Newsletter */}
-						<div className="w-full flex flex-col items-end">
+						<div className="w-full flex flex-col items-start">
 							<h3 className="py-2">Follow Me</h3>
 							<div className="flex gap-4 text-sm">
 								<a href="https://twitter.com" target="_blank" rel="noreferrer">
