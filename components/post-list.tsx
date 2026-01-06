@@ -21,7 +21,7 @@ export default function PostList({ posts }: { posts: PostType[] }) {
                     href={`/blog/${post.slug}`}
 					key={post.id}
 					>
-					<div className="w-full relative  gap-4  border-b items-center border-zinc-300 flex">
+					<div className="w-full relative  gap-4  border-b items-start border-zinc-300 flex">
 						<div className="h-30 min-w-40  flex relative overflow-hidden" >
 							<Image src={post.image} alt="image" fill className="object-cover" />
 						</div>

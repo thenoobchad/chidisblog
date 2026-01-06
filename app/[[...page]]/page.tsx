@@ -76,7 +76,7 @@ export default async function Home({ params, searchParams }: Props) {
 
 					<div className="flex flex-row gap-2 items-center w-full">
 						<h4 className="text-sm font-bold uppercase whitespace-nowrap">
-							{tag === undefined ? <p>Recent news</p> : <p>className{tag}</p>}{" "}
+							{tag === undefined ? <p>Recent news</p> : <p>{tag}</p>}
 						</h4>
 						<div className="w-full h-px bg-zinc-300" />
 					</div>

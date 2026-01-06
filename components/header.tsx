@@ -7,7 +7,7 @@ export const Header = () => {
 			<div className="w-full border-b border-zinc-300">
 				<div className="flex justify-between px-10 items-center py-6 max-w-5xl mx-auto">
 					<Link href="/">
-						<h1 className="text-lg font-bold">CHIDIBLOG</h1>
+						<h1 className="text-lg font-bold">Chidisblog</h1>
 					</Link>
 
 					<button className="bg-white text-zinc-900 px-6 py-2  border-3 border-zinc-900 text-xs shadow-[6px_6px_0px_#000] w-fit active:scale-98 active:shadow-[0px_0px_0px_#000] tracking-wide">
