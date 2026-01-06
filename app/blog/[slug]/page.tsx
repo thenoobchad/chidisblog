@@ -1,11 +1,16 @@
-
-
 import CommentForm from "@/components/comment-form";
 import { Header } from "@/components/header";
 import { UnderlineHeading } from "@/components/underline-heading";
 import { Posts } from "@/constants";
 import { db } from "@/lib/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import {
+	collection,
+	getDocs,
+	onSnapshot,
+	query,
+	where,
+	orderBy,
+} from "firebase/firestore";
 import Image from "next/image";
 
 type PostType = {
@@ -17,20 +22,29 @@ type PostType = {
 	content: string;
 };
 
+type CommentType = {
+	id: string;
+	userName: string;
+	userEmail: string;
+	comment: string;
+	createdAt: Date;
+};
 
-export default async function PostPage(params:{params: Promise<{slug: string}>}) {
-	
-	const slug = (await params.params).slug
-	const postsRef = collection(db, "posts")
+export default async function PostPage(params: {
+	params: Promise<{ slug: string }>;
+}) {
+	const slug = (await params.params).slug;
+	const postsRef = collection(db, "posts");
 
-	const postsSnapshot = await getDocs(postsRef)
+	const postsSnapshot = await getDocs(postsRef);
 	const posts = postsSnapshot.docs.map((doc) => ({
 		id: doc.id,
 		...(doc.data() as PostType),
 	})) as PostType[];
-	const post =  posts.filter((item) => (item.slug === slug))[0]
+	const post = posts.filter((item) => item.slug === slug)[0];
 
-	return (
+	return(
+	
 		<main className="w-full max-w-5xl mx-auto  flex flex-col relative ">
 			<Header />
 			<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col">
@@ -64,12 +78,12 @@ export default async function PostPage(params:{params: Promise<{slug: string}>})
 							View similar stories
 						</p>
 					</div>
+					
 
 					<div className="w-full flex flex-col gap-4">
 						<h1 className="py-2">Leave a comment</h1>
 						<CommentForm postId={post.id} />
 					</div>
-
 				</div>
 			</div>
 		</main>
