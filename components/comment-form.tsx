@@ -11,7 +11,7 @@ import {
 	serverTimestamp,
 	addDoc,
 } from "firebase/firestore";
-import { displayTime } from "@/lib/helper";
+
 
 export default function CommentForm({ postId }: { postId: string }) {
 	const [userName, setUserName] = useState("");
@@ -48,14 +48,13 @@ export default function CommentForm({ postId }: { postId: string }) {
 
 	useEffect(() => {
 		const commentsQuery = query(
-			collection(db, "posts", postId, "comments"),
+			 collection(db, "posts", postId, "comments"),
 			orderBy("createdAt", "desc")
 		);
 
-		const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
+		const unsubscribe =  onSnapshot(commentsQuery, (snapshot) => {
 			const comments = [];
-			snapshot.forEach((doc) => {
-				
+			snapshot?.forEach((doc) => {
 				comments.push({ id: doc.id, ...doc.data() });
 			});
 
@@ -65,29 +64,32 @@ export default function CommentForm({ postId }: { postId: string }) {
 		return () => {
 			unsubscribe();
 		};
-	}, [postId]);
+	}, [ postId]);
 
 	return (
 		<div>
 			<div>
 				{comments.length > 0 &&
-					comments.map((comment) => (
-						<div
-							key={comment.id}
-							className="border-b border-zinc-200 py-4 flex max-w-100 justify-between">
-							<div>
-								<p className="text-sm font-semibold">{comment.userName}</p>
-								<p className="text-xs text-zinc-500">
-									{comment.userEmail ?? "Guest"}
-								</p>
-								<p className="mt-2">{comment.comment}</p>
-							</div>
+					comments.map((comment) => {
 
-							<p className="text-xs text-zinc-500">
-								{displayTime(comment?.createdAt)}
-							</p>
-						</div>
-					))}
+						return (
+							<div
+								key={comment.id}
+								className="border-b border-zinc-200 py-4 flex max-w-100 justify-between">
+								<div>
+									<p className="text-sm font-semibold">{comment.userName}</p>
+									<p className="text-xs text-zinc-500">
+										{comment.userEmail ?? "Guest"}
+									</p>
+									<p className="mt-2">{comment.comment}</p>
+								</div>
+
+								<p className="text-xs text-zinc-500">
+								{ comment.createdAt && (comment?.createdAt).toDate().toLocaleString()}
+								</p>
+							</div>
+						)
+					})}
 			</div>
 			<form onSubmit={handleSubmit} className="w-full">
 				<div className="w-full flex flex-col gap-2">
