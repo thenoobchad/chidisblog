@@ -21,13 +21,13 @@ export default function PostList({ posts }: { posts: PostType[] }) {
                     href={`/blog/${post.slug}`}
 					key={post.id}
 					>
-					<div className="w-full relative  gap-4  border-y border-zinc-300 flex">
-						<div className="h-20 min-w-40  flex relative overflow-hidden" >
+					<div className="w-full relative  gap-4  border-b items-center border-zinc-300 flex">
+						<div className="h-30 min-w-40  flex relative overflow-hidden" >
 							<Image src={post.image} alt="image" fill className="object-cover" />
 						</div>
 						<div className="flex flex-col">
-							<h1 className="font-bold"> {`${post.title}`}</h1>
-							<p className="text-xs text-justify">{post.content.slice(0, 100)}...</p>
+							<h1 className="font-bold"> {`${(post.title).length > 40 ? post.title.slice(0, 40) + "..." : post.title}`}</h1>
+							<p className="text-xs text-justify">{(post.content).length > 70 ? post.content.slice(0, 70) + "..." : post.content}</p>
 						</div>
 					</div>
 				</Link>

@@ -1,15 +1,12 @@
 import CommentForm from "@/components/comment-form";
 import { Header } from "@/components/header";
 import { UnderlineHeading } from "@/components/underline-heading";
-import { Posts } from "@/constants";
+
 import { db } from "@/lib/firebase";
 import {
 	collection,
 	getDocs,
-	onSnapshot,
-	query,
-	where,
-	orderBy,
+	
 } from "firebase/firestore";
 import Image from "next/image";
 
@@ -22,13 +19,7 @@ type PostType = {
 	content: string;
 };
 
-type CommentType = {
-	id: string;
-	userName: string;
-	userEmail: string;
-	comment: string;
-	createdAt: Date;
-};
+
 
 export default async function PostPage(params: {
 	params: Promise<{ slug: string }>;

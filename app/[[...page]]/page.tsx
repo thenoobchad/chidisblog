@@ -22,14 +22,14 @@ type PostType = {
 };
 
 type Props = {
-	// remove Promise<...>; these are plain objects provided by Next.js
+	
 	params: { page?: string[] };
 	searchParams: Promise<{ tag?: string }>;
 };
 
 export default async function Home({ params, searchParams }: Props) {
 	const { page } = params;
-	const postsPerPage = 15;
+	const postsPerPage = 10;
 	const currentPage = page && page[0] ? parseInt(page[0], 10) : 1;
 
 	//Fetch all posts
@@ -83,7 +83,10 @@ export default async function Home({ params, searchParams }: Props) {
 
 					<PostList posts={filteredPost} />
 
-					<div className="flex flex-row gap-2 items-center w-full">
+					
+					{/* PAGINATION  */}
+
+					{totalPages < 11 ? null : <div className="flex flex-row gap-2 items-center w-full">
 						<div className="w-full h-px bg-zinc-400" />
 
 						<div className="text-sm capitalize whitespace-nowrap flex gap-4 items-center">
@@ -108,8 +111,9 @@ export default async function Home({ params, searchParams }: Props) {
 								</Link>
 							)}
 						</div>
+
 						<div className="w-full h-px bg-zinc-400" />
-					</div>
+					</div>}
 				</div>
 				<div className="top-0 lg:w-1/4 relative w-full overflow-hidden">
 					<div className="flex justify-start px-10 items-center py-6 lg:px-0 gap-2 overflow-hidden w-full flex-col ">
