@@ -114,7 +114,7 @@ export default function PostPage() {
 		console.log(category);
 	};
 	return (
-		<div className="p-4 w-full h-full">
+		<div className="p-4 w-full min-h-full overflow-y-scroll">
 			<h1 className="py-5">Create Post</h1>
 			<form onSubmit={handleSubmit} className="max-w-90 flex flex-col gap-3">
 				<div className="flex flex-col gap-2">
@@ -194,7 +194,7 @@ export default function PostPage() {
 						value={category}
 						onChange={handleSelect}
 						className="bg-zinc-300 px-2 py-3 outline-none">
-						<option >Choose Category</option>
+						<option>Choose Category</option>
 						<option value="politics">Politics</option>
 						<option value="economy">Economy</option>
 						<option value="science">Science</option>

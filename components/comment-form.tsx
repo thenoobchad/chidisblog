@@ -31,7 +31,6 @@ export default function CommentForm({ postId }: { postId: string }) {
 			createdAt: serverTimestamp(),
 		};
 
-		console.log(formData);
 		try {
 			const commentsRef = collection(db, "posts", postId, "comments");
 
@@ -56,7 +55,7 @@ export default function CommentForm({ postId }: { postId: string }) {
 		const unsubscribe = onSnapshot(commentsQuery, (snapshot) => {
 			const comments = [];
 			snapshot.forEach((doc) => {
-				console.log(doc, "doc here");
+				
 				comments.push({ id: doc.id, ...doc.data() });
 			});
 

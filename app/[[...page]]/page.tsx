@@ -70,7 +70,7 @@ export default async function Home({ params, searchParams }: Props) {
 								<h4 className="text-sm font-bold uppercase">feat. </h4>
 								<div className="w-full h-px bg-zinc-300" />
 							</div>
-							<FeaturedPost posts={JSON.parse(JSON.stringify(posts))} />
+							{posts.length > 0 && <FeaturedPost posts={JSON.parse(JSON.stringify(posts))} />}
 						</>
 					)}
 
@@ -81,9 +81,8 @@ export default async function Home({ params, searchParams }: Props) {
 						<div className="w-full h-px bg-zinc-300" />
 					</div>
 
-					<PostList posts={filteredPost} />
+					{filteredPost.length > 0 && <PostList posts={filteredPost} />}
 
-					
 					{/* PAGINATION  */}
 
 					{totalPages < 11 ? null : <div className="flex flex-row gap-2 items-center w-full">
@@ -127,13 +126,13 @@ export default async function Home({ params, searchParams }: Props) {
 
 const FeaturedPost = async ({ posts }) => {
 	const post = posts[1];
-	console.log("this is the featured post", post);
+	
 	return (
 		<div className="w-full relative">
-			<Link href={`/blog/${post.slug}`}>
+			<Link href={`/blog/${post?.slug}`}>
 				<div className="h-68 md:h-88 lg:h-100 lg: w-full flex relative overflow-hidden">
 					<Image
-						src={"/images/imagebg.png"}
+						src={post?.image}
 						alt="image"
 						fill
 						className="bg-cover"
@@ -144,7 +143,7 @@ const FeaturedPost = async ({ posts }) => {
 					<p className="uppercase font-extrabold"> {post.tag ?? "Featured"}</p>
 				</button>
 
-				<UnderlineHeading size="text-lg pt-4" text={`${post.title}`} />
+				<UnderlineHeading size="text-lg pt-4" text={`${post?.title}`} />
 			</Link>
 			<p className="text-sm font-light">{post.content.slice(0, 180)}...</p>
 			<div className="flex gap-4 py-4">

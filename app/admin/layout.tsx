@@ -14,18 +14,19 @@ export default function Adminlayout({ children }: { children: ReactNode }) {
 	
 
 	return (
-		<main className="w-full h-screen mx-auto max-w-7xl items-center justify-center flex flex-col relative bg-white text-zinc-800">
+		<main>
 			{loading ? (
 				<div className="h-15 w-15 border-t-3 border-r-3 animate-spin rounded-full" />
 			) : (
-				<div className="h-full w-full relative">
-					<div className="w-full ">
+				<div className=" flex h-screen flex-col overflow-hidden w-full relative">
+					<div className=" flex  w-full flex-none">
 						<AdminHeader user={user} />
 					</div>
-					<div className=" w-full h-full relative flex">
+						
+					<div className="flex flex-1 overflow-hidden">
 						<AdminSidebar />
-						<div className="overflow-y-auto w-full min-h-screen">{children}</div>
-					</div>
+					<div className="overflow-y-auto w-full flex-1 h-[2000px]">{children}</div>
+					</div> 
 				</div>
 			)}
 		</main>

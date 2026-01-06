@@ -42,7 +42,7 @@ export default async function PostPage(params: {
 				<div className="w-full relative">
 					<div className="h-80 md:h-100 lg:h-120 min-w-80 flex overflow-hidden relative">
 						<Image
-							src={"/images/imagebg.png"}
+							src={post?.image}
 							fill
 							alt="image"
 							className="object-cover"

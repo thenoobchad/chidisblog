@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export const AdminSidebar = () => {
 	return (
-		<div className=" px-3 pt-6 bg-blue-950 text-white h-full ">
+		<div className="flex-none overflow-y-auto px-3 pt-6 bg-blue-950 text-white h-full ">
 			<ul className="flex flex-col gap-3 flex-1 ">
 				{" "}
 				{navlinks.map((item, i) => (
