@@ -1,0 +1,77 @@
+
+
+import CommentForm from "@/components/comment-form";
+import { Header } from "@/components/header";
+import { UnderlineHeading } from "@/components/underline-heading";
+import { Posts } from "@/constants";
+import { db } from "@/lib/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import Image from "next/image";
+
+type PostType = {
+	id: string;
+	tag: string;
+	image: string;
+	title: string;
+	slug: string;
+	content: string;
+};
+
+
+export default async function PostPage(params:{params: Promise<{slug: string}>}) {
+	
+	const slug = (await params.params).slug
+	const postsRef = collection(db, "posts")
+
+	const postsSnapshot = await getDocs(postsRef)
+	const posts = postsSnapshot.docs.map((doc) => ({
+		id: doc.id,
+		...(doc.data() as PostType),
+	})) as PostType[];
+	const post =  posts.filter((item) => (item.slug === slug))[0]
+
+	return (
+		<main className="w-full max-w-5xl mx-auto  flex flex-col relative ">
+			<Header />
+			<div className="flex justify-start px-10 items-center py-6 gap-6 overflow-hidden w-full flex-col">
+				<div className="w-full relative">
+					<div className="h-80 md:h-100 lg:h-120 min-w-80 flex overflow-hidden relative">
+						<Image
+							src={"/images/imagebg.png"}
+							fill
+							alt="image"
+							className="object-cover"
+						/>
+					</div>
+
+					<button className=" text-zinc-50 px-6 py-0.5 font-bold text-xs shadow-[3px_3px_0px_#000] w-fit active:scale-98 tracking-wide absolute top-4 left-4 z-10 bg-red-500">
+						<p className="uppercase font-extrabold">{post?.tag}</p>
+					</button>
+
+					<UnderlineHeading size="text-lg pt-2" text={`${post?.title}`} />
+
+					<p className="text-sm py-4 font-light leading-6.5 text-justify">
+						{post?.content}
+					</p>
+					<div className="flex gap-4">
+						<p className=" uppercase text-xs my-1 text-zinc-500 bg-[#ddead1] px-2 py-1 w-fit outline-2 outline-dotted flex gap-2 items-center">
+							<span className="h-3 w-3 rounded-full bg-zinc-800" />
+							December 20, 2005 - chuddi
+						</p>
+
+						<p className=" uppercase text-xs my-1 text-white bg-zinc-800 px-2 py-1 w-fit outline-2 outline-zinc-800 flex gap-2 items-center">
+							<span className="h-3 w-3 rounded-full bg-white" />
+							View similar stories
+						</p>
+					</div>
+
+					<div className="w-full flex flex-col gap-4">
+						<h1 className="py-2">Leave a comment</h1>
+						<CommentForm postId={post.id} />
+					</div>
+
+				</div>
+			</div>
+		</main>
+	);
+}

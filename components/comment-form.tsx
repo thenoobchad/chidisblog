@@ -16,22 +16,18 @@ export default function CommentForm({ postId }: {postId: string }) {
 		e.preventDefault();
 		setLoading(true);
 
-		const formData = new FormData();
-		formData.append("userName", userName);
-		formData.append("comment", comment);
-		formData.append("userEmail", userEmail);
-
-		const commentData = {
-			userName,
-			comment,
+		const formData = {
 			userEmail,
-			createdAt: serverTimestamp(),
-		};
-
+			comment,
+			userName,
+			createdAt: JSON.parse(JSON.stringify(serverTimestamp())),
+		}
+		
+		console.log(formData)
 		try {
 			const commentsRef = collection(db, "posts", postId, "comments");
 
-			await addDoc(commentsRef, commentData);
+			await addDoc(commentsRef, formData);
 
 			setUserName("");
 			setComment("");
